@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Amado para Cafeterias</title>
+<meta name="description" content="Catálogo Amado Bakery para cafeterias: folhados, salgados e doces para a sua vitrine.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+/* Mesmo ambiente do site da feira: luz de janela entrando de lado, sombra das plantas na parede,
+   e o catálogo como páginas de um livro aberto sobre a toalha verde. */
+:root {
+  --creme: #f1e2cf;
+  --creme-claro: #fbf5ec;
+  --papel: rgba(251, 245, 236, .82);
+  --areia: #e2cfb6;
+  --pontilhado: #cbb497;
+  --salvia: #7f8a62;
+  --salvia-escura: #5d6844;
+  --sobre-salvia: #fffaf3;
+  --cacau: #3e2f26;
+  --cacau-suave: #6e5a4b;
+  --verde-fundo: #4a5537;
+  --sobre-verde: #f1e2cf;
+  --sobre-verde-suave: #dccdb0;
+  --fio-verde: rgba(241, 226, 207, 0.24);
+  --titulo: "Cormorant Garamond", Georgia, serif;
+  --texto: "DM Sans", system-ui, sans-serif;
+  --assinatura: "Pinyon Script", "Snell Roundhand", cursive;
+  --feixes: linear-gradient(62deg, transparent 0 16%, #000 25%, #000 39%, transparent 46%, transparent 51%, #000 58%, #000 70%, transparent 80%);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--creme); overflow-x: clip; }
+body { margin: 0; color: var(--cacau); font-family: var(--texto); font-size: 16px; line-height: 1.5; -webkit-tap-highlight-color: transparent; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--salvia-escura); outline-offset: 3px; border-radius: 8px; }
+img { max-width: 100%; }
+
+/* ---------- Ambiente ---------- */
+.ambiente { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.ambiente > div { position: absolute; inset: 0; }
+.luz {
+  background:
+    radial-gradient(120% 60% at 0% 0%, rgba(255, 214, 150, .30), transparent 60%),
+    linear-gradient(62deg, rgba(140, 100, 60, .07) 0 16%, rgba(255, 247, 231, .78) 25%, rgba(255, 247, 231, .78) 39%,
+      rgba(140, 100, 60, .05) 46%, rgba(140, 100, 60, .05) 51%, rgba(255, 247, 231, .62) 58%, rgba(255, 247, 231, .62) 70%, rgba(140, 100, 60, .08) 80%);
+  animation: nuvem 16s ease-in-out infinite;
+}
+@keyframes nuvem { 0%, 100% { opacity: 1; } 50% { opacity: .82; } }
+.sombra { -webkit-mask-image: var(--feixes); mask-image: var(--feixes); color: #4e3c2b; }
+.sombra svg { position: absolute; overflow: visible; }
+.sombra.perto svg { filter: blur(1.6px); }
+.sombra.longe svg { filter: blur(6px); }
+.s-a { left: -36px; top: -24px; width: 250px; opacity: .17; transform-origin: 0 0; animation: brisa 9s ease-in-out infinite; }
+.s-b { right: -28px; top: 34%; width: 230px; opacity: .15; transform-origin: 100% 0; animation: brisa-inv 11s ease-in-out infinite; }
+.s-c { right: -70px; top: -40px; width: 300px; opacity: .10; transform-origin: 100% 0; animation: brisa-inv 13s ease-in-out infinite; }
+.s-d { left: -60px; bottom: -60px; width: 280px; opacity: .09; transform-origin: 0 100%; animation: brisa 12s ease-in-out infinite; }
+@keyframes brisa { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(1.4deg); } }
+@keyframes brisa-inv { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-1.2deg); } }
+
+.tela { position: relative; z-index: 1; }
+.wrap { max-width: 520px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.etiqueta { font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--salvia-escura); margin: 0; }
+.chamada { font-family: var(--titulo); font-style: italic; font-weight: 400; font-size: 24px; line-height: 1.2; color: var(--cacau-suave); margin: 0; }
+.miudo { margin: 0; font-size: 11px; line-height: 1.9; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cacau-suave); text-align: center; }
+.miudo a { color: var(--salvia-escura); text-decoration: none; border-bottom: 1px solid var(--salvia); }
+
+/* ---------- Capa ---------- */
+.capa .wrap { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; padding-block: 36px 28px; text-align: center; }
+.capa img.logo { width: 140px; height: auto; display: block; mix-blend-mode: darken; }
+.capa h1 { margin: 0; font-family: var(--titulo); font-weight: 500; font-size: clamp(44px, 13vw, 64px); line-height: .95; text-wrap: balance; }
+.capa .ajudinha { display: block; font-family: var(--assinatura); font-size: 30px; line-height: 1.1; color: var(--salvia-escura); margin-bottom: 4px; }
+.capa .intro { margin: 0; max-width: 34ch; color: var(--cacau-suave); font-size: 15px; text-wrap: balance; }
+.vitrine-capa { position: relative; width: 100%; max-width: 360px; height: 170px; margin: 4px auto; }
+.vitrine-capa img { position: absolute; height: auto; filter: drop-shadow(4px 8px 5px rgba(60, 40, 20, .38)); }
+.vitrine-capa .v1 { width: 52%; left: 24%; top: 4%; transform: rotate(-6deg); z-index: 3; }
+.vitrine-capa .v2 { width: 34%; left: 0; top: 34%; transform: rotate(8deg); z-index: 2; }
+.vitrine-capa .v3 { width: 34%; right: 0; top: 30%; transform: rotate(-4deg); z-index: 2; }
+
+.botoes { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 400px; }
+.caminho {
+  position: relative; display: grid; grid-template-columns: 1fr 22px; align-items: center; gap: 14px; text-align: left;
+  border-radius: 18px; text-decoration: none; transition: transform .12s ease;
+}
+.caminho:active { transform: scale(.985); }
+.caminho .txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.caminho .nome { font-family: var(--titulo); font-weight: 500; font-size: 25px; line-height: 1.1; }
+.caminho .sub { font-size: 14px; line-height: 1.35; }
+.caminho .seta { width: 20px; height: 20px; }
+.caminho.principal {
+  padding: 20px 20px 20px 22px; color: var(--sobre-salvia);
+  background: linear-gradient(62deg, transparent 30%, rgba(255, 236, 200, .12) 42%, rgba(255, 236, 200, .12) 56%, transparent 66%), var(--salvia-escura);
+  box-shadow: 0 18px 34px -22px rgba(46, 54, 30, .7);
+}
+.caminho.principal .etiqueta { color: inherit; opacity: .85; }
+.caminho.principal .nome { font-size: clamp(28px, 8vw, 34px); line-height: 1.05; margin-top: 4px; }
+.caminho.secundario {
+  padding: 16px 18px; color: var(--cacau);
+  background: var(--papel); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 1px rgba(203, 180, 151, .55), 0 14px 30px -24px rgba(62, 47, 38, .45);
+}
+.caminho.secundario .sub { color: var(--cacau-suave); }
+.caminho.secundario .seta { color: var(--salvia-escura); }
+
+/* ---------- Como funciona ---------- */
+.como .wrap { padding-block: 24px 56px; display: flex; flex-direction: column; gap: 18px; }
+.cab { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; }
+.cab h2 { font-family: var(--titulo); font-weight: 500; font-size: 38px; line-height: 1; margin: 4px 0 0; }
+.cab .roteiro { font-family: var(--assinatura); font-size: 26px; line-height: 1.2; color: var(--salvia-escura); }
+.passos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; counter-reset: passo; }
+.passos li {
+  counter-increment: passo; display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; padding: 16px 18px 16px 14px; border-radius: 18px;
+  background: var(--papel); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 1px rgba(203, 180, 151, .55), 0 14px 30px -24px rgba(62, 47, 38, .45);
+}
+.passos li::before {
+  content: counter(passo, upper-roman); width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+  box-shadow: inset 0 0 0 1px var(--areia); color: var(--salvia-escura); font-family: var(--titulo); font-style: italic; font-size: 19px;
+}
+.passos b { display: block; font-family: var(--titulo); font-weight: 500; font-size: 23px; line-height: 1.15; }
+.passos span { display: block; font-size: 14px; color: var(--cacau-suave); line-height: 1.45; margin-top: 2px; }
+.diferenciais { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; }
+.diferenciais li { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; color: var(--salvia-escura); padding: 7px 12px; border-radius: 99px; box-shadow: inset 0 0 0 1px rgba(93, 104, 68, .45); background: rgba(251, 245, 236, .5); }
+
+/* ---------- Catálogo: o livro sobre a toalha verde ---------- */
+.tela-livro { background: var(--verde-fundo); color: var(--sobre-verde); }
+.tela-livro .wrap, .tela-livro .livro { position: relative; z-index: 4; }
+.sol { position: fixed; inset: 0; z-index: 3; pointer-events: none; mix-blend-mode: soft-light; opacity: 0; transition: opacity .4s ease; }
+.sol.brilho { mix-blend-mode: screen; }
+.sol.ligado { opacity: 1; }
+.sol.brilho.ligado { opacity: .38; }
+.sol svg { width: 100%; height: 100%; display: block; }
+
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--creme); }
+.indice { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; background: rgba(74, 85, 55, .92); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.indice .wrap { display: flex; justify-content: safe center; gap: 8px; padding-block: 10px; overflow-x: auto; scrollbar-width: none; }
+.indice .wrap::-webkit-scrollbar { display: none; }
+.indice button { flex: none;
+  appearance: none; border: 0; cursor: pointer; min-height: 44px; padding: 0 16px; border-radius: 999px;
+  font: 500 14px/1 var(--texto); color: var(--sobre-verde); background: transparent; box-shadow: inset 0 0 0 1px var(--fio-verde);
+  transition: background-color .25s ease, color .25s ease;
+}
+.indice button.ativo { background: var(--sobre-verde); color: var(--verde-fundo); box-shadow: none; }
+
+.livro { max-width: 540px; margin: 0 auto; padding: 20px max(16px, env(safe-area-inset-right, 0px)) 44px max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-direction: column; gap: 28px; }
+.pagina { --tinta: #33251b; --tinta-suave: #533f30; position: relative; color: var(--tinta); scroll-margin-top: 76px; padding: 26px 22px 18px 30px; }
+.pagina::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(90, 58, 22, .26) 0, rgba(90, 58, 22, .08) 14px, transparent 36px),
+    linear-gradient(270deg, rgba(90, 58, 22, .10) 0, transparent 12px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .25 0 0 0 0 .12 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    #dbc298;
+  border-radius: 2px 7px 7px 2px;
+  box-shadow: 1px 1px 0 #e2cfab, 2px 2px 0 #d3bd96, 3px 3px 0 #e2cfab, 4px 4px 0 #ccb48c, 5px 5px 0 #dcc8a4, 0 30px 44px -26px rgba(6, 10, 3, .8);
+}
+.pagina > * { position: relative; z-index: 4; }
+.cabeco { display: flex; justify-content: space-between; gap: 12px; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--tinta-suave);
+  padding-bottom: 8px; margin-bottom: 26px; border-bottom: 1px solid rgba(93, 104, 68, .4); }
+.folio { margin: 24px 0 0; text-align: center; font-family: var(--titulo); font-style: italic; font-size: 18px; color: var(--salvia-escura); }
+.ornamento { display: flex; align-items: center; gap: 10px; color: var(--salvia); width: 120px; margin: 6px auto 0; }
+.ornamento i { flex: 1; height: 1px; background: currentColor; opacity: .7; }
+.ornamento svg { width: 13px; height: 13px; }
+
+.abertura .titulo { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; }
+.abertura h2 { margin: 2px 0 0; font-family: var(--titulo); font-weight: 500; font-size: clamp(50px, 15vw, 66px); line-height: .95; }
+.abertura .local { margin: 6px 0 0; font-family: var(--titulo); font-style: italic; font-size: 19px; color: var(--tinta-suave); }
+.nota { margin-top: 28px; padding: 4px 0 4px 18px; border-left: 2px solid var(--salvia); display: flex; flex-direction: column; gap: 6px; }
+.nota .etiqueta { color: var(--salvia-escura); }
+.nota p.desc { margin: 0; font-family: var(--titulo); font-style: italic; font-size: 19px; line-height: 1.3; color: var(--tinta-suave); }
+
+.capitulo-cab { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; margin-bottom: 22px; }
+.capitulo-cab h2 { margin: 4px 0 0; font-family: var(--titulo); font-weight: 500; font-size: 40px; line-height: 1.02; }
+.capitulo-cab .roteiro { font-family: var(--assinatura); font-size: 25px; line-height: 1.2; color: var(--salvia-escura); }
+.itens { display: flex; flex-direction: column; gap: 20px; }
+.item { display: grid; grid-template-columns: 76px 1fr; gap: 14px; align-items: start; }
+.item .foto { width: 76px; height: 64px; display: grid; place-items: center; }
+.item .foto img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 3px 2px rgba(40, 25, 12, .45)); }
+/* pratinho provisório (produto ainda sem foto), igual ao do site da feira */
+.prato { width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; text-align: center; padding: 8px;
+  background: radial-gradient(circle, #fffaf2 0 55%, #efe3cf 57%, #fbf4e9 63%, #ecdec6 100%); box-shadow: 0 4px 5px -3px rgba(40, 25, 12, .5);
+  font-family: var(--titulo); font-style: italic; font-weight: 500; color: var(--cacau); line-height: 1.05; font-size: 11.5px; }
+.item:nth-child(odd) .foto img { transform: rotate(-4deg); }
+.item:nth-child(even) .foto img { transform: rotate(3deg); }
+.item .corpo { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.item .nome { font-family: var(--titulo); font-weight: 500; font-size: 23px; line-height: 1.15; min-width: 0; }
+.selo-gelo { align-self: flex-start; display: inline-flex; align-items: center; gap: 5px; margin: 2px 0 3px; padding: 2px 9px 2px 7px; border-radius: 99px;
+  font-size: 10.5px; line-height: 16px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--sobre-salvia); background: var(--salvia-escura); }
+.selo-gelo svg { width: 12px; height: 12px; flex: none; }
+.gelada p.texto { margin: 0; text-align: center; font-family: var(--titulo); font-style: italic; font-size: 19px; line-height: 1.35; color: var(--tinta-suave); text-wrap: balance; }
+.grade-gelo { list-style: none; margin: 22px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px 8px; }
+.grade-gelo li { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; font-family: var(--titulo); font-weight: 500; font-size: 17px; line-height: 1.1; text-wrap: balance; }
+.grade-gelo .foto { width: 76px; height: 64px; display: grid; place-items: center; }
+.grade-gelo img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 3px 2px rgba(40, 25, 12, .45)); }
+.grade-gelo li:nth-child(odd) img { transform: rotate(-4deg); }
+.grade-gelo li:nth-child(even) img { transform: rotate(3deg); }
+.gelada .obs { margin: 22px 0 0; padding: 4px 0 4px 14px; border-left: 2px solid var(--salvia); font-size: 14px; color: var(--tinta-suave); line-height: 1.45; }
+.item .desc { font-size: 14px; color: var(--tinta-suave); line-height: 1.4; }
+.sabores-lista { display: flex; flex-wrap: wrap; align-items: center; row-gap: 2px; margin: 0; padding: 0; list-style: none; font-size: 13.5px; line-height: 1.4; color: var(--tinta-suave); }
+.sabores-lista li { display: inline-flex; align-items: center; }
+.sabores-box { display: flex; flex-direction: column; gap: 1px; margin: 4px 0 2px; padding: 6px 0 6px 12px; border-left: 1.5px solid rgba(127, 138, 98, .7); }
+.sabores-box .sabores-lista { display: block; }
+.sabores-box .sabores-lista li { display: inline; }
+.sabores-box .sabores-lista li + li::before { content: " · "; display: inline; width: auto; height: auto; margin: 0; background: none; color: var(--salvia); font-weight: 500; }
+.sabores-tit { font-size: 10px; line-height: 14px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--salvia-escura); }
+.sabores-mais { font-family: var(--titulo); font-style: italic; font-size: 15.5px; line-height: 1.3; color: var(--salvia-escura); margin-top: 2px; }
+.sabores-lista li + li::before { content: ""; width: 10px; height: 1px; margin: 0 7px; background: var(--salvia); }
+.cafe { display: inline-flex; align-items: center; gap: 6px; margin-top: 3px; font-size: 13px; color: var(--salvia-escura); }
+.cafe svg { width: 14px; height: 14px; flex: none; }
+
+.fecho .titulo { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; }
+.fecho h2 { margin: 4px 0 0; font-family: var(--titulo); font-weight: 500; font-size: 40px; line-height: 1.02; }
+.fecho p.texto { margin: 10px 0 0; text-align: center; font-family: var(--titulo); font-style: italic; font-size: 19px; line-height: 1.35; color: var(--tinta-suave); text-wrap: balance; }
+.perguntas { margin: 22px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.perguntas li { display: flex; gap: 10px; font-size: 14.5px; line-height: 1.4; color: var(--tinta); }
+.perguntas li::before { content: ""; flex: none; width: 10px; height: 1px; margin-top: 11px; background: var(--salvia); }
+.btn-zap {
+  display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; margin-top: 24px; border-radius: 16px; text-decoration: none;
+  background: var(--salvia-escura); color: var(--sobre-salvia); font-weight: 500; font-size: 16px;
+}
+.btn-zap svg { width: 18px; height: 18px; }
+.despedida { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; margin-top: 26px; }
+.despedida .assina { margin: 0; font-family: var(--assinatura); font-size: 36px; line-height: 1; color: var(--salvia-escura); }
+.despedida .miudo { color: var(--tinta-suave); }
+.chao { position: relative; z-index: 4; background: var(--creme); }
+.calcada { display: block; width: 100%; height: 56px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .luz, .sombra svg { animation: none !important; }
+  .caminho, .indice button { transition: none; }
+}
+@media (max-width: 380px) {
+  .indice .wrap { gap: 6px; }
+  .indice button { padding: 0 11px; font-size: 13px; }
+  .pagina { padding-inline: 26px 16px; }
+  .item { grid-template-columns: 60px 1fr; gap: 10px; }
+  .item .foto { width: 60px; height: 52px; }
+}
+
+/* ---------- Impressão / PDF: cada capítulo numa folha ---------- */
+@media print {
+  @page { size: A4; margin: 14mm; }
+  html, body { background: #fff; }
+  .ambiente, .sol, .indice, .botoes, .btn-zap, .chao { display: none !important; }
+  .capa .wrap { min-height: auto; padding-block: 40mm 10mm; }
+  .tela-livro { background: none; }
+  .livro { max-width: none; padding: 0; gap: 0; }
+  .pagina { break-before: page; break-inside: avoid; padding: 0; }
+  .pagina::before { display: none; }
+  .item { break-inside: avoid; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<svg id="molde" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs><g id="ramo-a"></g><g id="ramo-b"></g><g id="ramo-c"></g><g id="ramo-d"></g>
+    <filter id="f-sol" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="f-folha" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <mask id="m-sol" maskUnits="userSpaceOnUse" x="-60" y="-60" width="520" height="980">
+      <g filter="url(#f-sol)">
+        <polygon points="40,30 450,-40 450,690 -50,820" fill="#fff"/>
+        <line x1="262" y1="-70" x2="160" y2="930" stroke="#000" stroke-width="30"/>
+        <line x1="-70" y1="455" x2="470" y2="350" stroke="#000" stroke-width="24"/>
+      </g>
+      <g filter="url(#f-folha)">
+        <use href="#ramo-b" color="#000" transform="translate(150 -30) scale(1.15)"/>
+        <use href="#ramo-a" color="#000" transform="translate(-40 500) scale(.85)"/>
+      </g>
+    </mask>
+  </defs>
+  <filter id="pedra" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+    <feDisplacementMap in="SourceGraphic" scale="1.8"/>
+  </filter>
+</svg>
+
+<div class="ambiente" aria-hidden="true">
+  <div class="luz"></div>
+  <div class="sombra longe"><svg class="s-c" viewBox="0 0 260 420"><use href="#ramo-c"/></svg><svg class="s-d" viewBox="0 0 260 420"><use href="#ramo-d"/></svg></div>
+  <div class="sombra perto"><svg class="s-a" viewBox="0 0 260 420"><use href="#ramo-a"/></svg><svg class="s-b" viewBox="0 0 260 420"><use href="#ramo-b"/></svg></div>
+</div>
+
+<!-- ============ CAPA ============ -->
+<header class="tela capa">
+  <div class="wrap">
+    <img class="logo" src="fotos/logo.jpg" alt="Amado Bakery" width="140" height="143">
+    <p class="etiqueta">Catálogo para cafeterias</p>
+    <h1><span class="ajudinha">da nossa fornada para a</span>sua vitrine</h1>
+    <div class="vitrine-capa" aria-hidden="true">
+      <img class="v2" src="fotos/paodequeijo.webp" alt="">
+      <img class="v1" src="fotos/tradicional.webp" alt="">
+      <img class="v3" src="fotos/cinnamon.webp" alt="">
+    </div>
+    <p class="intro">Folhados, salgados e doces feitos à mão, para acompanhar o café que você já serve com carinho.</p>
+    <nav class="botoes" aria-label="Atalhos">
+      <a class="caminho principal" href="#catalogo">
+        <span class="txt"><span class="etiqueta">Conheça a linha</span><span class="nome">Ver o catálogo</span></span>
+        <svg class="seta" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4 V16 M5 11 L10 16 L15 11"/></svg>
+      </a>
+      <a class="caminho secundario" data-zap href="#">
+        <span class="txt"><span class="nome">Pedir uma proposta</span><span class="sub">Fale com a gente no WhatsApp</span></span>
+        <svg class="seta" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ COMO FUNCIONA ============ -->
+<section class="tela como" aria-labelledby="como-titulo">
+  <div class="wrap">
+    <div class="cab">
+      <p class="etiqueta">Parceria</p>
+      <h2 id="como-titulo">Como funciona</h2>
+      <span class="roteiro">simples, do jeito que tem que ser</span>
+    </div>
+    <ol class="passos">
+      <li><div><b>Escolha os itens</b><span>Monte a vitrine da sua cafeteria com os itens e sabores que combinam com o seu público. Os sabores do catálogo são exemplos: dá para pedir outros.</span></div></li>
+      <li><div><b>Combine com a gente</b><span>Quantidades, frequência e dias de entrega são acertados direto com a Amado. Os valores dependem da demanda da sua cafeteria.</span></div></li>
+      <li><div><b>Receba fresco ou congelado</b><span>A gente produz e entrega. Vários itens também vão congelados, para você ter estoque e servir conforme o movimento.</span></div></li>
+    </ol>
+    <ul class="diferenciais" aria-label="Diferenciais">
+      <li>Feito à mão</li><li>Opções congeladas</li><li>Campinas · SP</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CATÁLOGO ============ -->
+<section class="tela tela-livro" id="catalogo" aria-label="Catálogo">
+  <div class="sol" aria-hidden="true"><svg viewBox="0 0 400 860" preserveAspectRatio="xMidYMid slice"><rect x="-60" y="-60" width="520" height="980" fill="#fff0c4" mask="url(#m-sol)"/></svg></div>
+  <div class="sol brilho" aria-hidden="true"><svg viewBox="0 0 400 860" preserveAspectRatio="xMidYMid slice"><rect x="-60" y="-60" width="520" height="980" fill="#ffe7b0" mask="url(#m-sol)"/></svg></div>
+  <nav class="indice" aria-label="Capítulos do catálogo"><div class="wrap" id="indice"></div></nav>
+
+  <div class="livro" id="livro">
+    <article class="pagina abertura">
+      <div class="cabeco" aria-hidden="true"><span>Amado Bakery</span><span>Para cafeterias</span></div>
+      <div class="titulo">
+        <p class="etiqueta">Linha para revenda</p>
+        <h2>Catálogo</h2>
+        <p class="local" id="edicao">edição de novembro</p>
+        <div class="ornamento" aria-hidden="true"><i></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20 C6.5 16 3.5 13.2 3.5 9.4 C3.5 6.8 5.5 5 7.8 5 C9.6 5 11 6.1 12 7.6 C13 6.1 14.4 5 16.2 5 C18.5 5 20.5 6.8 20.5 9.4 C20.5 13.2 17.5 16 12 20 Z"/></svg><i></i></div>
+      </div>
+      <div class="nota">
+        <p class="etiqueta">Uma nota antes de começar</p>
+        <p class="desc">Cada item vem com uma sugestão de café para servir junto. É só um ponto de partida para montar os combos da sua casa.</p>
+      </div>
+      <p class="folio" aria-hidden="true">1</p>
+    </article>
+    <!-- os capítulos são montados pelo script, a partir do CATALOGO -->
+  </div>
+
+  <div class="chao" aria-hidden="true">
+    <svg class="calcada" viewBox="0 0 400 56" preserveAspectRatio="xMidYMid slice" style="filter:url(#pedra)">
+      <defs><pattern id="ondas-calcada" width="48" height="22" patternUnits="userSpaceOnUse">
+        <path d="M0 11 C8 3 16 3 24 11 S40 19 48 11" fill="none" stroke="#7f8a62" stroke-width="6" stroke-opacity=".5"/>
+      </pattern></defs>
+      <rect width="400" height="56" fill="url(#ondas-calcada)"/>
+    </svg>
+  </div>
+</section>
+
+<script>
+/* ======================================================
+   CONFIGURAÇÃO — é só mexer aqui
+   ====================================================== */
+const WHATSAPP = "5519993157239";
+const INSTAGRAM = "amado.bakery";
+const EDICAO = "edição de novembro · 2026";
+const MENSAGEM = "Olá! Vi o catálogo da Amado para cafeterias e gostaria de receber uma proposta.";
+
+// Sem preços no catálogo: os valores dependem da demanda de cada cafeteria e são combinados na conversa.
+// congelado: true -> o item ganha o selo "também congelado" e entra na página da linha congelada
+const CATALOGO = [
+  { grupo: "Folhados", sub: "massa folhada na manteiga", itens: [
+    { nome: "Croissant tradicional", foto: "tradicional", desc: "Folhado, amanteigado e crocante por fora.", cafe: "espresso ou café coado" },
+    { nome: "Croissant de pistache", foto: "pistache", desc: "Recheado com creme de pistache.", cafe: "cappuccino" },
+    { nome: "Folhado caprese", foto: "caprese", desc: "Mussarela, tomate e manjericão.", cafe: "café coado" },
+    { nome: "Folhado 4 queijos", foto: "tartelete", desc: "Recheio cremoso de quatro queijos.", cafe: "espresso" }
+  ]},
+  { grupo: "Pães", sub: "para o café da manhã", itens: [
+    { nome: "Pão de leite", congelado: true, desc: "Macio e levemente adocicado, ótimo para torradas e sanduíches.", cafe: "café com leite" },
+    { nome: "Brioche", congelado: true, desc: "Massa rica em manteiga e ovos, dourada e fofinha.", cafe: "cappuccino" },
+    { nome: "Pão italiano", congelado: true, desc: "Casca crocante e miolo aerado, para tostas e acompanhamentos.", cafe: "café coado" }
+  ]},
+  { grupo: "Salgados", sub: "para o lanche da tarde", itens: [
+    { nome: "Pão de queijo", foto: "paodequeijo", congelado: true, desc: "O clássico que não pode faltar no balcão.", cafe: "café coado" },
+    // fechado: true -> mostra só estes sabores, sem "e outros sabores"
+    { nome: "Rolls salgados", foto: "pepperoni", congelado: true, fechado: true, desc: "Massa macia enrolada com recheio.",
+      sabores: ["Pepperoni e queijo", "Alho e queijos"], cafe: "espresso" }
+  ]},
+  { grupo: "Doces", sub: "doce na medida", itens: [
+    { nome: "Rolls doces", foto: "cinnamon", congelado: true, desc: "Massa macia enrolada, do clássico cinnamon roll a novas versões.",
+      sabores: ["Canela (cinnamon roll)", "Nutella", "Doce de leite", "Goiabada com cream cheese", "Frutas vermelhas", "Maçã com canela"], cafe: "latte" },
+    { nome: "Choux", foto: "choux", congelado: true, desc: "Massa leve com recheio cremoso.",
+      sabores: ["Baunilha e caramelo salgado", "Torta de limão", "Pistache", "Chocolate belga", "Frutas vermelhas", "Café", "Doce de leite"], cafe: "espresso" },
+    { nome: "Donuts", foto: "donuts", sabores: ["Vanilla glazed", "Chocolate glazed", "Homer", "Doce de leite", "Nutella"], cafe: "café coado" },
+    { nome: "Basca", foto: "basca", congelado: true, desc: "Cheesecake cremoso e tostado por cima, com cobertura à escolha.",
+      sabores: ["Frutas vermelhas", "Doce de leite", "Goiaba", "Pistache"], cafe: "espresso" },
+    { nome: "Bolos de festa", foto: "bolofatia2", congelado: true, desc: "Em fatias, com camadas e recheio.",
+      sabores: ["Red velvet", "Trufado de maracujá", "Ninho com morango", "Chocolate com brigadeiro", "Prestígio", "Limão siciliano"], cafe: "cappuccino" },
+    { nome: "Bolos de vó", foto: "bolosimples", congelado: true, desc: "Bolos caseiros, de café da tarde.",
+      sabores: ["Cenoura com especiarias e frosting", "Fubá com goiabada", "Laranja", "Chocolate", "Banana com canela", "Formigueiro"], cafe: "café coado" }
+  ]}
+];
+// Os sabores acima são exemplos: o cliente pode pedir outros (aparece "e outros sabores, combinando com a gente").
+
+// Perguntas que vale responder na conversa com a cafeteria (aparecem no fim do catálogo)
+const PERGUNTAS = [
+  "Quais itens e quantidades fazem sentido para a sua cafeteria",
+  "O que vai fresco e o que vai congelado",
+  "Dias e horários de entrega",
+  "Valores, de acordo com a demanda da sua casa"
+];
+
+/* ====================================================== */
+const $ = (id) => document.getElementById(id);
+const reduz = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+const linkZap = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(MENSAGEM);
+const FLOCO = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.5 V14.5 M2.4 4.75 L13.6 11.25 M2.4 11.25 L13.6 4.75"/><path d="M6.3 2.6 L8 4 L9.7 2.6 M6.3 13.4 L8 12 L9.7 13.4 M2.6 6.9 L4.6 6.5 L4 4.5 M13.4 9.1 L11.4 9.5 L12 11.5 M2.6 9.1 L4.6 9.5 L4 11.5 M13.4 6.9 L11.4 6.5 L12 4.5"/></svg>';
+
+/* ---------- Sombras: ramos com folhas em coração (iguais aos do site da feira) ---------- */
+function semente(a) {
+  return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+}
+const FOLHA = "M0 0 C -.1 -.08 -.45 -.07 -.46 .25 C -.47 .52 -.24 .74 .06 1.08 C .2 .76 .47 .54 .45 .25 C .44 -.07 .1 -.08 0 0 Z";
+function ramo(sem, p0, c1, c2, p3, n, maior, menor) {
+  const r = semente(sem);
+  const bz = (t, a, b, c, d) => { const u = 1 - t; return u*u*u*a + 3*u*u*t*b + 3*u*t*t*c + t*t*t*d; };
+  const dz = (t, a, b, c, d) => { const u = 1 - t; return 3*u*u*(b-a) + 6*u*t*(c-b) + 3*t*t*(d-c); };
+  const f = (v) => v.toFixed(1);
+  let caules = '<path d="M' + p0 + ' C' + c1 + ' ' + c2 + ' ' + p3 + '" stroke-width="2.4"/>';
+  let folhas = "";
+  for (let i = 0; i < n; i++) {
+    const t = Math.min(.97, .06 + i * (.9 / (n - 1)) + (r() - .5) * .03);
+    const x = bz(t, p0[0], c1[0], c2[0], p3[0]), y = bz(t, p0[1], c1[1], c2[1], p3[1]);
+    const ang = Math.atan2(dz(t, p0[1], c1[1], c2[1], p3[1]), dz(t, p0[0], c1[0], c2[0], p3[0]));
+    const lado = i % 2 ? 1 : -1;
+    const tam = maior + (menor - maior) * (i / (n - 1)) + (r() - .5) * 6;
+    const ap = ang + lado * (.9 + r() * .5);
+    const pl = tam * (.35 + r() * .15);
+    const bx = x + Math.cos(ap) * pl, by = y + Math.sin(ap) * pl;
+    const mx = x + Math.cos(ap) * pl * .5, my = y + Math.sin(ap) * pl * .5 + pl * .18;
+    caules += '<path d="M' + f(x) + ' ' + f(y) + ' Q' + f(mx) + ' ' + f(my) + ' ' + f(bx) + ' ' + f(by) + '" stroke-width="1.3"/>';
+    const ate = Math.PI / 2 - ap, dif = Math.atan2(Math.sin(ate), Math.cos(ate));
+    const fa = ap + dif * (.35 + r() * .25) + (r() - .5) * .4;
+    const sx = (.62 + r() * .38) * (r() < .5 ? -1 : 1);
+    folhas += '<path d="' + FOLHA + '" transform="translate(' + f(bx) + ' ' + f(by) + ') rotate(' +
+      f(fa * 180 / Math.PI - 90) + ') scale(' + (sx * tam).toFixed(2) + ' ' + tam.toFixed(2) + ')"/>';
+  }
+  return '<g fill="none" stroke="currentColor" stroke-linecap="round">' + caules + '</g><g fill="currentColor">' + folhas + '</g>';
+}
+function montarRamos() {
+  $("ramo-a").innerHTML = ramo(11, [-10, -10], [90, 40], [150, 140], [240, 360], 10, 52, 26);
+  $("ramo-b").innerHTML = ramo(5, [270, 0], [170, 50], [120, 170], [50, 380], 10, 50, 26);
+  $("ramo-c").innerHTML = ramo(23, [270, -10], [200, 80], [230, 230], [140, 410], 9, 58, 30);
+  $("ramo-d").innerHTML = ramo(8, [-10, 120], [80, 120], [150, 220], [230, 400], 8, 54, 30);
+}
+
+/* ---------- O livro ---------- */
+const XICARA = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.5 H11 V9.5 C11 11.7 9.2 13.5 7 13.5 H6.5 C4.3 13.5 2.5 11.7 2.5 9.5 Z"/><path d="M11 7.5 H12 C13 7.5 13.7 8.2 13.7 9.1 C13.7 10 13 10.7 12 10.7 H10.8"/><path d="M5.5 2.5 C5 3.3 6 3.9 5.5 4.8 M8 2.5 C7.5 3.3 8.5 3.9 8 4.8"/></svg>';
+const CORACAO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20 C6.5 16 3.5 13.2 3.5 9.4 C3.5 6.8 5.5 5 7.8 5 C9.6 5 11 6.1 12 7.6 C13 6.1 14.4 5 16.2 5 C18.5 5 20.5 6.8 20.5 9.4 C20.5 13.2 17.5 16 12 20 Z"/></svg>';
+const ROMANOS = ["I", "II", "III", "IV", "V", "VI"];
+const ZAP_ICONE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20 L5.3 16.2 A8 8 0 1 1 8 18.8 Z"/><path d="M9 9.5 C9 12 11.5 14.8 14.5 15 L15.5 13.8 L13.8 12.9 L13 13.7 C12 13.3 10.8 12.1 10.4 11.1 L11.2 10.3 L10.3 8.5 Z"/></svg>';
+
+function montarLivro() {
+  const livro = $("livro"), indice = $("indice");
+  const paginas = [{ id: "parte-abre", curto: "Início", pag: livro.querySelector(".abertura") }];
+  livro.querySelector(".abertura").id = "parte-abre";
+
+  CATALOGO.forEach((g, gi) => {
+    const pag = el("article", "pagina"); pag.id = "parte-" + gi;
+    const cabeco = el("div", "cabeco"); cabeco.setAttribute("aria-hidden", "true");
+    cabeco.append(el("span", null, "Catálogo"), el("span", null, g.grupo));
+    const cab = el("div", "capitulo-cab");
+    cab.append(el("p", "etiqueta", "Capítulo " + ROMANOS[gi]), el("h2", null, g.grupo), el("span", "roteiro", g.sub));
+    const orn = el("div", "ornamento"); orn.setAttribute("aria-hidden", "true"); orn.innerHTML = "<i></i>" + CORACAO + "<i></i>";
+    cab.appendChild(orn);
+    const itens = el("div", "itens");
+    g.itens.forEach((it) => {
+      const row = el("div", "item");
+      const foto = el("div", "foto");
+      if (it.foto) { const i = el("img"); i.src = "fotos/" + it.foto + ".webp"; i.alt = ""; i.loading = "lazy"; i.decoding = "async"; foto.appendChild(i); }
+      else { foto.setAttribute("aria-hidden", "true"); foto.appendChild(el("div", "prato", it.nome.toLowerCase())); }   // pratinho até chegar a foto
+      const corpo = el("div", "corpo");
+      corpo.appendChild(el("span", "nome", it.nome));
+      if (it.congelado) { const s = el("span", "selo-gelo"); s.innerHTML = FLOCO; s.append("também congelado"); corpo.appendChild(s); }
+      if (it.desc) corpo.appendChild(el("span", "desc", it.desc));
+      if (it.sabores) {
+        const box = el("div", "sabores-box");
+        box.appendChild(el("span", "sabores-tit", it.fechado ? "sabores" : "alguns sabores"));
+        const ul = el("ul", "sabores-lista"); ul.setAttribute("aria-label", it.fechado ? "Sabores" : "Exemplos de sabores");
+        it.sabores.forEach((x) => ul.appendChild(el("li", null, x)));
+        box.appendChild(ul);
+        if (!it.fechado) box.appendChild(el("span", "sabores-mais", "e outros sabores, combinando com a gente"));
+        corpo.appendChild(box);
+      }
+      if (it.cafe) { const c = el("span", "cafe"); c.innerHTML = XICARA; c.append("vai bem com " + it.cafe); corpo.appendChild(c); }
+      row.append(foto, corpo);
+      itens.appendChild(row);
+    });
+    pag.append(cabeco, cab, itens);
+    pag.appendChild(Object.assign(el("p", "folio", String(gi + 2)), { ariaHidden: "true" }));
+    livro.appendChild(pag);
+    paginas.push({ id: pag.id, curto: g.grupo, pag });
+  });
+
+  // a linha congelada: todos os itens marcados com congelado: true
+  const gelados = CATALOGO.flatMap((g) => g.itens.filter((it) => it.congelado));
+  if (gelados.length) {
+    const pg = el("article", "pagina gelada"); pg.id = "parte-gelo";
+    pg.innerHTML =
+      '<div class="cabeco" aria-hidden="true"><span>Catálogo</span><span>Congelados</span></div>' +
+      '<div class="capitulo-cab"><p class="etiqueta">Capítulo ' + ROMANOS[CATALOGO.length] + '</p><h2>Linha congelada</h2>' +
+      '<span class="roteiro">pra ter sempre à mão</span><div class="ornamento" aria-hidden="true"><i></i>' + FLOCO + '<i></i></div></div>' +
+      '<p class="texto">Estes itens também podem ser enviados congelados. Assim a sua cafeteria mantém um estoque e serve conforme o movimento do dia, sem desperdício.</p>';
+    const grade = el("ul", "grade-gelo"); grade.setAttribute("aria-label", "Itens que podem ir congelados");
+    gelados.forEach((it) => {
+      const li = el("li");
+      const f = el("div", "foto");
+      if (it.foto) { const i = el("img"); i.src = "fotos/" + it.foto + ".webp"; i.alt = ""; i.loading = "lazy"; f.appendChild(i); }
+      else { f.setAttribute("aria-hidden", "true"); f.appendChild(el("div", "prato", it.nome.toLowerCase())); }
+      li.append(f, el("span", null, it.nome));
+      grade.appendChild(li);
+    });
+    pg.appendChild(grade);
+    pg.appendChild(el("p", "obs", "Como guardar e preparar cada item, a gente explica direitinho na hora de combinar o pedido."));
+    pg.appendChild(Object.assign(el("p", "folio", String(CATALOGO.length + 2)), { ariaHidden: "true" }));
+    livro.appendChild(pg);
+    paginas.push({ id: pg.id, curto: "Congelados", pag: pg });
+  }
+
+  // a última página: vamos conversar
+  const fim = el("article", "pagina fecho"); fim.id = "parte-fim";
+  fim.innerHTML =
+    '<div class="cabeco" aria-hidden="true"><span>Catálogo</span><span>Contato</span></div>' +
+    '<div class="titulo"><p class="etiqueta">Próximo passo</p><h2>Vamos conversar?</h2>' +
+    '<div class="ornamento" aria-hidden="true"><i></i>' + CORACAO + '<i></i></div></div>' +
+    '<p class="texto">Conta pra gente sobre a sua cafeteria e montamos uma proposta do tamanho da sua vitrine.</p>';
+  const ul = el("ul", "perguntas"); ul.setAttribute("aria-label", "O que a gente combina");
+  PERGUNTAS.forEach((p) => ul.appendChild(el("li", null, p)));
+  fim.appendChild(ul);
+  const zap = el("a", "btn-zap"); zap.href = linkZap; zap.target = "_blank"; zap.rel = "noopener";
+  zap.innerHTML = ZAP_ICONE; zap.append("Pedir proposta no WhatsApp");
+  fim.appendChild(zap);
+  const desp = el("div", "despedida");
+  const fone = WHATSAPP.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+  desp.innerHTML = '<p class="assina">feito com amor</p><p class="miudo">Amado Bakery · Campinas · SP<br>WhatsApp <a href="' + linkZap + '" target="_blank" rel="noopener">' + fone + '</a><br><a href="https://www.instagram.com/' + INSTAGRAM + '/" target="_blank" rel="noopener">@' + INSTAGRAM + '</a></p>';
+  fim.appendChild(desp);
+  fim.appendChild(Object.assign(el("p", "folio", String(CATALOGO.length + (gelados.length ? 3 : 2))), { ariaHidden: "true" }));
+  livro.appendChild(fim);
+  paginas.push({ id: fim.id, curto: "Contato", pag: fim });
+
+  paginas.slice(1).forEach((p) => {
+    const b = el("button", null, p.curto); b.type = "button"; b.dataset.alvo = p.id;
+    b.addEventListener("click", () => p.pag.scrollIntoView({ behavior: reduz ? "auto" : "smooth", block: "start" }));
+    indice.appendChild(b);
+  });
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((ents) => ents.forEach((e) => {
+      if (e.isIntersecting) indice.querySelectorAll("button").forEach((b) => b.classList.toggle("ativo", b.dataset.alvo === e.target.id));
+    }), { rootMargin: "-90px 0px -55% 0px" });
+    paginas.forEach((p) => io.observe(p.pag));
+    // o sol da janela só aparece enquanto o livro está na tela
+    const sois = document.querySelectorAll(".sol");
+    new IntersectionObserver((ents) => ents.forEach((e) => sois.forEach((s) => s.classList.toggle("ligado", e.isIntersecting))), { threshold: 0 }).observe($("livro"));
+  } else document.querySelectorAll(".sol").forEach((s) => s.classList.add("ligado"));
+}
+
+/* O logo é um JPG com fundo creme: tiramos o fundo para a luz passar por trás dele (igual ao site da feira). */
+function logoSemFundo() {
+  const img = document.querySelector("img.logo");
+  const tratar = () => {
+    img.onload = null;
+    try {
+      const c = document.createElement("canvas"); c.width = img.naturalWidth; c.height = img.naturalHeight;
+      const x = c.getContext("2d"); x.drawImage(img, 0, 0);
+      const dados = x.getImageData(0, 0, c.width, c.height), p = dados.data;
+      const fundo = [0, 1, 2].map((k) => (p[k] + p[(c.width - 1) * 4 + k] + p[(c.width * (c.height - 1)) * 4 + k] + p[(c.width * c.height - 1) * 4 + k]) / 4);
+      for (let i = 0; i < p.length; i += 4) {
+        let a = 0;
+        for (let k = 0; k < 3; k++) a = Math.max(a, (fundo[k] - p[i + k]) / fundo[k]);
+        if (a < .05) { p[i + 3] = 0; continue; }
+        a = Math.min(1, (a - .05) / .95 * 1.15 + .02);
+        for (let k = 0; k < 3; k++) p[i + k] = Math.max(0, Math.min(255, fundo[k] - (fundo[k] - p[i + k]) / a));
+        p[i + 3] = Math.round(a * 255);
+      }
+      x.putImageData(dados, 0, 0);
+      img.src = c.toDataURL("image/png"); img.style.mixBlendMode = "normal";
+    } catch (e) { /* aberto direto do disco: fica o JPG com darken */ }
+  };
+  if (img.complete && img.naturalWidth) tratar(); else img.onload = tratar;
+}
+
+function iniciar() {
+  montarRamos(); logoSemFundo();
+  $("edicao").textContent = EDICAO;
+  document.querySelectorAll("[data-zap]").forEach((a) => { a.href = linkZap; a.target = "_blank"; a.rel = "noopener"; });
+  montarLivro();
+}
+iniciar();
+</script>
+</body>
+</html>
